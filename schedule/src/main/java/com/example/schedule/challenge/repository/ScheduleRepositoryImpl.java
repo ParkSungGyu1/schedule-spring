@@ -106,6 +106,8 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
             params.add(memberId);
         }
         querySql.append("ORDER BY s.updated_at DESC ");
+        //LIMIT => 결과 중 처음부터 몇개만 가져오기
+        //OFFSET =>어디서 부터 가져올지
         querySql.append("LIMIT ? OFFSET ? ");
         params.add(size);
         params.add(page * size);

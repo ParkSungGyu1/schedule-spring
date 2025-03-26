@@ -91,8 +91,12 @@ public class ScheduleRepositoryImplLv2 implements ScheduleRepository {
 
     @Override
     public Schedule update(Schedule schedule) {
-        String sql = "UPDATE schedule SET task = ?, member_name = ? WHERE id = ?";
-        jdbcTemplate.update(sql, schedule.getTask(), schedule.getMemberName(), schedule.getId());
+
+        LocalDateTime now = LocalDateTime.now();
+        schedule.setUpdatedAt(now);
+
+        String sql = "UPDATE schedule SET task = ?, member_name = ?, updated_at=? WHERE id = ?";
+        jdbcTemplate.update(sql, schedule.getTask(), schedule.getMemberName(), schedule.getUpdatedAt(), schedule.getId());
         return findById(schedule.getId()).orElseThrow(() -> new IllegalStateException("일정 수정 후 조회 실패"));
     }
 
